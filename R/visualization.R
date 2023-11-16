@@ -1637,7 +1637,7 @@ netVisual_diffInteraction <- function(object, comparison = c(1,2), measure = c("
                                       weight.scale = FALSE, vertex.weight = 20, vertex.weight.max = NULL, vertex.size.max = 15, vertex.label.cex=1,vertex.label.color= "black",
                                       edge.weight.max = NULL, edge.width.max=8, alpha.edge = 0.6, label.edge = FALSE,edge.label.color='black',edge.label.cex=0.8,
                                       edge.curved=0.2,shape='circle',layout=in_circle(), margin=0.2,
-                                      arrow.width=1,arrow.size = 0.2){
+                                      arrow.width=1,arrow.size = 0.2, edge.increase.by=1){
   options(warn = -1)
   measure <- match.arg(measure)
   obj1 <- object@net[[comparison[1]]][[measure]]
@@ -1728,9 +1728,9 @@ netVisual_diffInteraction <- function(object, comparison = c(1,2), measure = c("
   }
   if (weight.scale == TRUE) {
     #E(g)$width<-0.3+edge.width.max/(max(E(g)$weight)-min(E(g)$weight))*(E(g)$weight-min(E(g)$weight))
-    igraph::E(g)$width<- 0.3+igraph::E(g)$weight/edge.weight.max*edge.width.max
+    igraph::E(g)$width<- (0.3+igraph::E(g)$weight/edge.weight.max*edge.width.max)*edge.increase.by
   }else{
-    igraph::E(g)$width<-0.3+edge.width.max*igraph::E(g)$weight
+    igraph::E(g)$width<-(0.3+edge.width.max*igraph::E(g)$weight)*edge.increase.by
   }
 
 
